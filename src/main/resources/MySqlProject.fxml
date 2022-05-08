@@ -18,31 +18,39 @@
 
 <VBox fx:id="insertPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="603.0" prefWidth="917.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UI.MySqlProjectController">
     <MenuBar fx:id="query1" prefHeight="22.0" prefWidth="600.0">
-        <Menu text="insert">
+        <Menu text="add,delete,update">
             <MenuItem fx:id="insertEmployee" onAction="#showInsertEmployee" text="Employee" />
+         <MenuItem fx:id="insertDish" mnemonicParsing="false" onAction="#showInsertDich" text="dish" />
             <MenuItem fx:id="insertGuide" onAction="#showInsertGuide" text="guide" />
 
         </Menu>
         <Menu text="Ahmed">
-            <MenuItem onAction="#showQuery11" text="Query1" />
+            <MenuItem onAction="#showQuery11" text="Query11" />
             <MenuItem text="Query12" />
             <MenuItem text="Query13" />
         </Menu>
         <Menu text="Aya">
-            <MenuItem  text="Query1" onAction="showQuery21" />
-            <MenuItem text="Query2" onAction="showQuery22" />
-            <MenuItem text="Query3" onAction="showQuery23" />
+            <MenuItem onAction="#showQuery21" text="Query1" />
+            <MenuItem onAction="#showQuery22" text="Query2" />
+            <MenuItem onAction="#showQuery23" text="Query3" />
         </Menu>
         <Menu text="Oussama">
-            <MenuItem  text="Query1" onAction="showQuery21" />
-            <MenuItem text="Query2" onAction="showQuery21"  />
-            <MenuItem text="Query3" onAction="showQuery21" />
+            <MenuItem onAction="#showQuery31" text="Query1" />
+            <MenuItem onAction="#showQuery32" text="Query2" />
+            <MenuItem onAction="#showQuery33" text="Query3" />
         </Menu>
+
 
     </MenuBar>
 
     <AnchorPane fx:id="insertPanes">
-        <Pane fx:id="insertEmployeePane" prefHeight="580.0" prefWidth="917.0" visible="false">
+        <Pane fx:id="query1Pane" prefHeight="580.0" prefWidth="917.0" visible="false">
+            <AnchorPane prefHeight="580.0" prefWidth="917.0">
+                <TextArea layoutX="211.0" layoutY="32.0" prefHeight="144.0" prefWidth="449.0" />
+                <TextArea layoutX="163.0" layoutY="259.0" prefHeight="200.0" prefWidth="598.0" />
+            </AnchorPane>
+        </Pane>
+        <Pane fx:id="insertEmployeePane" disable="true" prefHeight="580.0" prefWidth="917.0" visible="false">
             <TextField fx:id="empSsn" layoutX="193.0" layoutY="41.0" onAction="#searchBtn" prefHeight="25.0" prefWidth="67.0" promptText="Ssn" />
             <Label layoutX="194.0" layoutY="21.0" text="Ssn" />
             <Button fx:id="searchEmpBtn" layoutX="194.0" layoutY="70.0" mnemonicParsing="false" onAction="#searchBtn" prefHeight="25.0" prefWidth="56.0" text="Search" />
@@ -102,11 +110,84 @@
             <Button fx:id="searchEmpsBtn" layoutX="396.0" layoutY="70.0" mnemonicParsing="false" onAction="#searchEmployees" prefHeight="25.0" prefWidth="139.0" text="Search All Employees" />
          <Button fx:id="confirmUpdateBtn" layoutX="51.0" layoutY="371.0" mnemonicParsing="false" onAction="#confirmUpdate" text="Confirm Update" visible="false" />
         </Pane>
-        <Pane fx:id="query1Pane" prefHeight="580.0" prefWidth="917.0" visible="false">
-            <AnchorPane prefHeight="580.0" prefWidth="917.0">
-                <TextArea layoutX="211.0" layoutY="32.0" prefHeight="144.0" prefWidth="449.0" />
-                <TextArea layoutX="163.0" layoutY="259.0" prefHeight="200.0" prefWidth="598.0" />
-            </AnchorPane>
+        <Pane fx:id="dishPane" disable="true" prefHeight="580.0" prefWidth="917.0" visible="false">
+            <TextField fx:id="dishSearchField" layoutX="193.0" layoutY="41.0" onAction="#searchBtn" prefHeight="25.0" prefWidth="67.0" promptText="dish" />
+            <Label layoutX="194.0" layoutY="21.0" text="dish" />
+            <Button fx:id="searchDishBtn" layoutX="194.0" layoutY="70.0" mnemonicParsing="false" onAction="#searchBtn1" prefHeight="25.0" prefWidth="56.0" text="Search" />
+            <Button fx:id="deleteDishBtn" layoutX="332.0" layoutY="70.0" mnemonicParsing="false" onAction="#deleteDish" prefHeight="25.0" prefWidth="56.0" text="Delete" />
+            <Button fx:id="updateDishBtn" layoutX="263.0" layoutY="70.0" mnemonicParsing="false" onAction="#updateDish" prefHeight="25.0" prefWidth="56.0" text="Update" />
+            <Button fx:id="addDishBtn" layoutX="51.0" layoutY="335.0" mnemonicParsing="false" onAction="#insertDish" text="Add dish" />
+            <TextArea fx:id="resultArea1" layoutX="250.0" layoutY="433.0" prefHeight="115.0" prefWidth="487.0" wrapText="true" />
+            <Label layoutX="186.0" layoutY="404.0" text="Result Console">
+                <font>
+                    <Font name="System Bold" size="12.0" />
+                </font>
+            </Label>
+            <VBox layoutX="97.0" layoutY="24.0" spacing="4.0">
+                <TextField fx:id="dishField" prefHeight="25.0" prefWidth="79.0" promptText="dish" />
+                <TextField fx:id="cuisineField" prefHeight="25.0" prefWidth="79.0" promptText="cuisine" />
+                <TextField fx:id="categoryField" prefHeight="25.0" prefWidth="79.0" promptText="category" />
+                <TextField fx:id="difficultyField" layoutX="10.0" layoutY="68.0" prefHeight="25.0" prefWidth="79.0" promptText="difficulty" />
+            </VBox>
+            <VBox layoutX="9.0" layoutY="28.0" prefWidth="67.0" spacing="12.0">
+                <Label text="dish" />
+                <Label text="Cuisine" />
+                <Label text="category" />
+                <Label layoutX="10.0" layoutY="68.0" text="difficulty" />
+            </VBox>
+            <Separator layoutX="180.0" layoutY="14.0" orientation="VERTICAL" prefHeight="333.0" prefWidth="7.0" />
+            <TableView fx:id="dishTable" editable="true" layoutX="193.0" layoutY="102.0" prefHeight="234.0" prefWidth="708.0">
+                <columns>
+                    <TableColumn fx:id="dishCul" prefWidth="57.0" text="dish" />
+                    <TableColumn fx:id="cuisineCul" prefWidth="75.0" text="cuisine" />
+                    <TableColumn fx:id="categoryCul" prefWidth="73.0" text="category" />
+                    <TableColumn fx:id="difficultyCul" prefWidth="79.0" text="difficulty" />
+                </columns>
+                <columnResizePolicy>
+                    <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                </columnResizePolicy>
+            </TableView>
+            <Button fx:id="searchAllDishBtn" layoutX="396.0" layoutY="70.0" mnemonicParsing="false" onAction="#searchDishes" prefHeight="25.0" prefWidth="139.0" text="Search All Employees" />
+            <Button fx:id="confirmUpdateBtn1" layoutX="51.0" layoutY="371.0" mnemonicParsing="false" onAction="#confirmUpdate1" text="Confirm Update" visible="false" />
+        </Pane>
+        <Pane fx:id="insertGuidePane" prefHeight="580.0" prefWidth="917.0">
+            <TextField fx:id="guideIdSearchField" layoutX="193.0" layoutY="41.0" onAction="#searchBtn" prefHeight="25.0" prefWidth="67.0" promptText="Ssn" />
+            <Label layoutX="194.0" layoutY="21.0" text="Id" />
+            <Button fx:id="searchGuideBtn" layoutX="194.0" layoutY="70.0" mnemonicParsing="false" onAction="#searchGuide" prefHeight="25.0" prefWidth="56.0" text="Search" />
+            <Button fx:id="deleteGuideBtn" layoutX="332.0" layoutY="70.0" mnemonicParsing="false" onAction="#deleteGuide" prefHeight="25.0" prefWidth="56.0" text="Delete" />
+            <Button fx:id="updateGuideBtn" layoutX="263.0" layoutY="70.0" mnemonicParsing="false" onAction="#updateGuide" prefHeight="25.0" prefWidth="56.0" text="Update" />
+            <Button fx:id="addGuideBtn" layoutX="51.0" layoutY="335.0" mnemonicParsing="false" onAction="#insertGuide" text="Add guide" />
+            <TextArea fx:id="resultArea2" layoutX="250.0" layoutY="433.0" prefHeight="115.0" prefWidth="487.0" wrapText="true" />
+            <Label layoutX="186.0" layoutY="404.0" text="Result Console">
+                <font>
+                    <Font name="System Bold" size="12.0" />
+                </font>
+            </Label>
+            <TextField fx:id="guideNameSearchField" layoutX="268.0" layoutY="41.0" onAction="#searchBtn" prefHeight="25.0" prefWidth="120.0" promptText="Lname" />
+            <Label layoutX="270.0" layoutY="21.0" text="Name" />
+            <VBox layoutX="97.0" layoutY="24.0" spacing="4.0">
+                <TextField fx:id="guideIdField" prefHeight="25.0" prefWidth="79.0" promptText="Id" />
+                <TextField fx:id="guideNameField" prefHeight="25.0" prefWidth="79.0" promptText="Name" />
+                <TextField fx:id="guidePhoneField" prefHeight="25.0" prefWidth="79.0" promptText="phonNumber" />
+            </VBox>
+            <VBox layoutX="9.0" layoutY="28.0" prefWidth="67.0" spacing="12.0">
+                <Label text="Id" />
+                <Label text="Name" />
+                <Label text="phone Number" />
+            </VBox>
+            <Separator layoutX="180.0" layoutY="14.0" orientation="VERTICAL" prefHeight="333.0" prefWidth="7.0" />
+            <TableView fx:id="guideTable" editable="true" layoutX="193.0" layoutY="102.0" prefHeight="234.0" prefWidth="708.0">
+                <columns>
+                    <TableColumn fx:id="guideIdCul" prefWidth="57.0" text="Id" />
+                    <TableColumn fx:id="guideNameCul" prefWidth="75.0" text="Name" />
+                    <TableColumn fx:id="guidephoneCul" prefWidth="73.0" text="Phone Number" />
+                </columns>
+                <columnResizePolicy>
+                    <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                </columnResizePolicy>
+            </TableView>
+            <Button fx:id="searchGuidesBtn" layoutX="396.0" layoutY="70.0" mnemonicParsing="false" onAction="#searchGuides" prefHeight="25.0" prefWidth="139.0" text="Search All guides" />
+            <Button fx:id="confirmUpdateBtn2" layoutX="51.0" layoutY="371.0" mnemonicParsing="false" onAction="#confirmUpdate2" text="Confirm Update" visible="false" />
         </Pane>
     </AnchorPane>
 

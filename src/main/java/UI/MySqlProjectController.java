@@ -1,7 +1,7 @@
 package UI;
 
 import businessLogic.ProjectLogic;
-import domain.Employee;
+import domain.*;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -34,6 +34,42 @@ public class MySqlProjectController {
     public Menu query1button;
     public MenuBar query1;
     public Pane query1Pane;
+    public Pane dishPane;
+    public Button confirmUpdateBtn1;
+    public Button searchAllDishBtn;
+    public TableColumn<Dish,String> difficultyCul;
+    public TableColumn<Dish,String> categoryCul;
+    public TableColumn<Dish,String> cuisineCul;
+    public TableColumn<Dish,String> dishCul;
+    public TableView<Dish> dishTable;
+    public TextField difficultyField;
+    public TextField categoryField;
+    public TextField cuisineField;
+    public TextField dishField;
+    public Button updateDishBtn;
+    public TextArea resultArea1;
+    public Button addDishBtn;
+    public Button deleteDishBtn;
+    public Button searchDishBtn;
+    public TextField dishSearchField;
+    public MenuItem insertDish;
+    public TextField guideIdSearchField;
+    public Button searchGuideBtn;
+    public Button deleteGuideBtn;
+    public Button updateGuideBtn;
+    public Button addGuideBtn;
+    public TextArea resultArea2;
+    public TableView<Guide> guideTable;
+    public TextField guidePhoneField;
+    public TextField guideNameField;
+    public TextField huideIdField;
+    public TextField guideNameSearchField;
+    public Button searchGuidesBtn;
+    public Button confirmUpdateBtn2;
+    public TableColumn<Guide,String> guidephoneCul;
+    public TableColumn<Guide,String> guideNameCul;
+    public TableColumn<Guide,String> guideIdCul;
+    public TextField guideIdField;
 
     ProjectLogic projectLogic = new ProjectLogic();
     public MenuItem insertEmployee;
@@ -82,6 +118,16 @@ public class MySqlProjectController {
         AddressCul.setCellValueFactory(new PropertyValueFactory<>("Address"));
         Super_ssnCul.setCellValueFactory(new PropertyValueFactory<>("Super_ssn"));
         DnoCul.setCellValueFactory(new PropertyValueFactory<>("Dno"));
+        //*******************************************************************************
+        dishCul.setCellValueFactory(new PropertyValueFactory<>("dish"));
+        categoryCul.setCellValueFactory(new PropertyValueFactory<>("category"));
+        cuisineCul.setCellValueFactory(new PropertyValueFactory<>("cuisine"));
+        difficultyCul.setCellValueFactory(new PropertyValueFactory<>("difficulty"));
+        //*******************************************************************************
+        guideNameCul.setCellValueFactory(new PropertyValueFactory<>("name"));
+        guideIdCul.setCellValueFactory(new PropertyValueFactory<>("Id"));
+        guidephoneCul.setCellValueFactory(new PropertyValueFactory<>("phone"));
+
     }
 
     public void updateEmployee(ActionEvent actionEvent) {
@@ -165,6 +211,7 @@ public class MySqlProjectController {
         insertEmployeePane.setVisible(true);
     }
 
+
     public void showInsertGuide(ActionEvent actionEvent) {
         insertGuidePane.toFront();
     }
@@ -189,6 +236,7 @@ public class MySqlProjectController {
         DnoFIeld.clear();
         SalaryField.clear();
         SexField.clear();
+
     }
 
     public void searchBtn(ActionEvent actionEvent) throws Exception {
@@ -213,8 +261,7 @@ public class MySqlProjectController {
     public void hidePanes( ) {
         insertEmployeePane.setVisible(false);
         query1Pane.setVisible(false);
-
-
+        dishPane.setVisible(false);
     }
 
     public void showQuery11(Event actionEvent) {
@@ -255,6 +302,142 @@ public class MySqlProjectController {
     }
 
 
+    public void confirmUpdate1(ActionEvent actionEvent) throws Exception {
+        projectLogic.updateDish(createDish());
+        resultArea.setText("Dish Updated successfully");
+        clearFields();
+        employeeTable.getItems().clear();
+        confirmUpdateBtn1.setVisible(false);
+        searchDishes(actionEvent);
+    }
 
+    private Dish createDish() {
+        Dish dish = new Dish();
+        dish.setDish(dishField.getText());
+        dish.setCuisine(cuisineField.getText());
+        dish.setDifficulty(difficultyField.getText());
+        dish.setCategory(categoryField.getText());
+        return dish;
+    }
+
+    public void searchDishes(ActionEvent actionEvent) throws Exception {
+        dishTable.getItems().clear();
+        dishTable.getItems().addAll(projectLogic.searchDishes());
+
+
+    }
+
+    public void deleteDish(ActionEvent actionEvent) {
+        projectLogic.deleteDish(dishTable.getSelectionModel().getSelectedItem());
+        resultArea1.setText("Dish deleted successfully");
+    }
+
+    public void updateDish(ActionEvent actionEvent) {
+        Dish d = dishTable.getSelectionModel().getSelectedItem();
+        if(d == null){
+            resultArea.setText("Please select a dish to update");
+        }
+        else{
+            dishField.setText(d.getDish());
+            categoryField.setText(d.getCategory());
+            cuisineField.setText(d.getCuisine());
+            difficultyField.setText(d.getDifficulty());
+            confirmUpdateBtn1.setVisible(true);
+        }
+    }
+
+    public void searchBtn1(ActionEvent actionEvent) throws Exception {
+        if (!dishSearchField.getText().isEmpty()) {
+            dishTable.getItems().clear();
+            for (Dish d : projectLogic.searchDishes()) {
+                if (d.getDish().equals(dishSearchField.getText())) {
+                    dishTable.getItems().add(d);
+                }
+            }
+        }
+        else {resultArea.setText("Please enter a dish name to get results");}
+
+    }
+
+    public void showInsertDich(ActionEvent actionEvent) {
+        hidePanes();
+        dishPane.setVisible(true);
+    }
+
+    public void insertDish(ActionEvent actionEvent) {
+        Dish dish = new Dish();
+        dish.setDish(dishField.getText());
+        dish.setCuisine(cuisineField.getText());
+        dish.setDifficulty(difficultyField.getText());
+        dish.setCategory(categoryField.getText());
+        projectLogic.insertDish(dish);
+        resultArea1.setText("Dish inserted successfully");
+    }
+
+    public void searchGuide(ActionEvent actionEvent) {
+
+        if (!guideIdSearchField.getText().isEmpty()) {
+            guideTable.getItems().clear();
+            for (Guide g : projectLogic.serchGuides()) {
+                if (g.getId().equals(guideIdSearchField.getText())) {
+                    guideTable.getItems().add(g);
+                }
+            }
+        }
+        else if (!guideNameSearchField.getText().isEmpty()) {
+            employeeTable.getItems().clear();
+            for (Guide g : projectLogic.serchGuides()) {
+                if (g.getName().equalsIgnoreCase(guideNameSearchField.getText())) {
+                    guideTable.getItems().add(g);
+                }
+            }
+        }
+        else {resultArea.setText("Please enter a guide id or a name to get a result");}
+
+    }
+
+    public void deleteGuide(ActionEvent actionEvent) {
+        projectLogic.deleteGuide(guideTable.getSelectionModel().getSelectedItem());
+        resultArea2.setText("Guide deleted successfully");
+    }
+
+    public void updateGuide(ActionEvent actionEvent) {
+        Guide g = guideTable.getSelectionModel().getSelectedItem();
+        if(g == null){
+            resultArea.setText("Please select a guide to update");
+        }
+        else{
+            guideIdField.setText(g.getId());
+            guideNameField.setText(g.getName());
+            guidePhoneField.setText(g.getPhone());
+            confirmUpdateBtn2.setVisible(true);
+        }
+        
+        
+    }
+
+    public void insertGuide(ActionEvent actionEvent) {
+        Guide guide = new Guide();
+        guide.setName(guideNameField.getText());
+        guide.setId(guideIdField.getText());
+        guide.setPhone(guidePhoneField.getText());
+        projectLogic.insertGuide(guide);
+
+    }
+
+    public void searchGuides(ActionEvent actionEvent) {
+        guideTable.getItems().clear();
+        guideTable.getItems().addAll(projectLogic.serchGuides());
+        resultArea.setText("done");
+
+    }
+
+    public void confirmUpdate2(ActionEvent actionEvent) {
+        Guide g = guideTable.getSelectionModel().getSelectedItem();
+        g.setId(guideIdField.getText());
+        g.setName(guideNameField.getText());
+        g.setPhone(guidePhoneField.getText());
+        projectLogic.updateGuide(g);
+    }
 }
 

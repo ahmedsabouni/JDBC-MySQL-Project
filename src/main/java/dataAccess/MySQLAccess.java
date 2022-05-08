@@ -1,10 +1,13 @@
 package dataAccess;
 
+import domain.Dish;
 import domain.Employee;
+import domain.Guide;
 
 import java.sql.*;
-import java.time.LocalDate;
+import java.util.Collection;
 import java.util.List;
+import java.util.ArrayList;
 
 public class MySQLAccess {
     public Connection ConnectDb() throws Exception {
@@ -111,6 +114,156 @@ public class MySQLAccess {
             connection.close();
 
     } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public Collection<Dish> getDishes() throws Exception {
+        Collection<Dish> dishes = new ArrayList<>();
+
+            Connection connection = ConnectDb();
+            String query = "SELECT * FROM dishes";
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(query);
+            while (resultSet.next()) {
+                Dish dish = new Dish();
+                dish.setDish(resultSet.getString("dish"));
+                dish.setCuisine(resultSet.getString("cuisine"));
+                dish.setCategory(resultSet.getString("category"));
+                dish.setDifficulty(resultSet.getString("difficulty"));
+                dishes.add(dish);
+            }
+            connection.close();
+            return dishes;
+
+
+    }
+
+    public void updateDish(Dish dish) {
+        try {
+            Connection connection = ConnectDb();
+            String query = "UPDATE dishes SET  dish = ?, cuisine = ?, category = ?, difficulty = ? where dish=?";
+            PreparedStatement preparedStatement=connection.prepareStatement(query);
+            preparedStatement.setString(1, dish.getDish());
+            preparedStatement.setString(2, dish.getCuisine());
+            preparedStatement.setString(3, dish.getCategory());
+            preparedStatement.setString(4, dish.getDifficulty());
+            preparedStatement.setString(5, dish.getDish());
+            preparedStatement.execute();
+            connection.close();
+    } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void insertDish(Dish dish) {
+        try {
+            Connection connection = ConnectDb();
+            String query = "INSERT INTO dishes (dish, cuisine, category, difficulty) VALUES (?, ?, ?, ?)";
+            PreparedStatement preparedStatement=connection.prepareStatement(query);
+            preparedStatement.setString(1, dish.getDish());
+            preparedStatement.setString(2, dish.getCuisine());
+            preparedStatement.setString(3, dish.getCategory());
+            preparedStatement.setString(4, dish.getDifficulty());
+            preparedStatement.execute();
+            connection.close();
+    } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+ /*public ArrayList <String> query11(String ssn) throws Exception {
+            ArrayList <String> list = new ArrayList<String>();
+            Connection connection = ConnectDb();
+            String query = "SELECT MIN(person.AGE)FROM frequents INNER JOIN restaurant ON frequents.restaurname=restaurant.restaurname INNER JOIN person on frequents.nameId=person.nameId where restaurant.city=? AND person.gender=?";
+            PreparedStatement preparedStatement=connection.prepareStatement((java.lang.String) query);
+            preparedStatement.setString(1, "Paris");
+            preparedStatement.setString(2, "male");
+            ResultSet result= preparedStatement.getResultSet();
+
+
+
+
+
+
+        }*/}
+
+    public void deleteDish(Dish selectedItem) {
+        try {
+            Connection connection = ConnectDb();
+            String query = "DELETE FROM dishes WHERE dish = ?";
+            PreparedStatement preparedStmt = connection.prepareStatement(query);
+            preparedStmt.setString(1, selectedItem.getDish());
+            preparedStmt.execute();
+            connection.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public Collection<Guide> getGuides() {
+        Collection<Guide> guides = new ArrayList<Guide>();
+        try {
+            Connection connection = ConnectDb();
+            String query = "SELECT * FROM tourguide";
+            PreparedStatement preparedStatement=connection.prepareStatement(query);
+            ResultSet result= preparedStatement.executeQuery();
+            while (result.next()) {
+                Guide guide = new Guide();
+
+                guide.setName(result.getString("guidename"));
+                guide.setPhone(result.getString("guidephone"));
+                guide.setId(result.getString("GuideId"));
+                guides.add(guide);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return guides;
+}
+
+    public void insertGuide(Guide guide) {
+        try {
+            Connection connection = ConnectDb();
+            String query = "INSERT INTO tourguide (GuideId, guidephone, guidename) VALUES (?, ?, ?)";
+            PreparedStatement preparedStatement=connection.prepareStatement(query);
+            preparedStatement.setString(1, guide.getId());
+            preparedStatement.setString(2, guide.getPhone());
+            preparedStatement.setString(3, guide.getName());
+            preparedStatement.execute();
+            connection.close();
+    } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void deleteGuide(Guide selectedItem) {
+        try {
+            Connection connection = ConnectDb();
+            String query = "DELETE FROM tourguide WHERE GuideId = ?";
+            PreparedStatement preparedStatement=connection.prepareStatement(query);
+            preparedStatement.setString(1, selectedItem.getId());
+            preparedStatement.execute();
+            connection.close();
+    } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void updateGuide(Guide g) {
+        try {
+            Connection connection = ConnectDb();
+            String query = "UPDATE tourguide SET guidephone = ?, guidename = ? WHERE GuideId = ?";
+            PreparedStatement preparedStatement=connection.prepareStatement(query);
+            preparedStatement.setString(1, g.getPhone());
+            preparedStatement.setString(2, g.getName());
+            preparedStatement.setString(3, g.getId());
+            preparedStatement.execute();
+            connection.close();
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
