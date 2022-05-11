@@ -151,7 +151,7 @@
             <Button fx:id="confirmUpdateBtn1" layoutX="51.0" layoutY="371.0" mnemonicParsing="false" onAction="#confirmUpdate1" text="Confirm Update" visible="false" />
         </Pane>
         <Pane fx:id="insertGuidePane" prefHeight="580.0" prefWidth="917.0">
-            <TextField fx:id="guideIdSearchField" layoutX="193.0" layoutY="41.0" onAction="#searchBtn" prefHeight="25.0" prefWidth="67.0" promptText="Ssn" />
+            <TextField fx:id="guideIdSearchField" layoutX="193.0" layoutY="41.0" onAction="#searchBtn" prefHeight="25.0" prefWidth="67.0" promptText="Id" />
             <Label layoutX="194.0" layoutY="21.0" text="Id" />
             <Button fx:id="searchGuideBtn" layoutX="194.0" layoutY="70.0" mnemonicParsing="false" onAction="#searchGuide" prefHeight="25.0" prefWidth="56.0" text="Search" />
             <Button fx:id="deleteGuideBtn" layoutX="332.0" layoutY="70.0" mnemonicParsing="false" onAction="#deleteGuide" prefHeight="25.0" prefWidth="56.0" text="Delete" />
@@ -163,7 +163,7 @@
                     <Font name="System Bold" size="12.0" />
                 </font>
             </Label>
-            <TextField fx:id="guideNameSearchField" layoutX="268.0" layoutY="41.0" onAction="#searchBtn" prefHeight="25.0" prefWidth="120.0" promptText="Lname" />
+            <TextField fx:id="guideNameSearchField" layoutX="268.0" layoutY="41.0" onAction="#searchBtn" prefHeight="25.0" prefWidth="120.0" promptText="name" />
             <Label layoutX="270.0" layoutY="21.0" text="Name" />
             <VBox layoutX="97.0" layoutY="24.0" spacing="4.0">
                 <TextField fx:id="guideIdField" prefHeight="25.0" prefWidth="79.0" promptText="Id" />
