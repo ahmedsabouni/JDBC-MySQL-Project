@@ -262,6 +262,8 @@ public class MySqlProjectController {
         insertEmployeePane.setVisible(false);
         query1Pane.setVisible(false);
         dishPane.setVisible(false);
+        insertGuidePane.setVisible(false);
+
     }
 
     public void showQuery11(Event actionEvent) {
