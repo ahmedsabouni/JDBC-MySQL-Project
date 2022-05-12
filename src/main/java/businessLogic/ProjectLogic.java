@@ -73,5 +73,13 @@ public class ProjectLogic {
         MySQLAccess mySQLAccess = new MySQLAccess();
         mySQLAccess.updateGuide(g);
     }
+
+    public List<Object> runQuery(String text) throws Exception {
+        MySQLAccess mySQLAccess = new MySQLAccess();
+        return mySQLAccess.runQuery(text);
+
+    }
+
+
 }
 

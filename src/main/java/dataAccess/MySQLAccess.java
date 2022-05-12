@@ -267,4 +267,27 @@ public class MySQLAccess {
             e.printStackTrace();
         }
     }
+
+    public List<Object> runQuery(String text) throws Exception {
+        List<Object> list = new ArrayList<Object>();
+        Connection connection = ConnectDb();
+        String query = text;
+        PreparedStatement preparedStmt = connection.prepareStatement(query);
+        ResultSet resultSet = preparedStmt.executeQuery();
+        System.out.println("Query executed");
+        // print result set
+        while (resultSet.next()) {
+            Object obj = new Object();
+            obj="\n";
+            for (int i = 1; i <= resultSet.getMetaData().getColumnCount(); i++) {
+
+            obj += resultSet.getMetaData().getColumnName(i) + ": " + resultSet.getString(i) + "\n";
+
+            }
+            list.add(obj);
+        }
+        connection.close();
+        return list;
+    }
+
 }

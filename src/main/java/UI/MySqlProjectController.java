@@ -71,6 +71,28 @@ public class MySqlProjectController {
     public TableColumn<Guide,String> guideIdCul;
     public TextField guideIdField;
 
+    public TextArea QueryField11;
+    public TextArea QueryField12;
+    public TextArea QueryField13;
+    public TextArea QueryResult11;
+    public TextArea QueryResult12;
+    public TextArea QueryResult13;
+    public TextArea QueryResult31;
+    public TextArea QueryResult32;
+    public TextArea QueryResul33;
+    public TextArea QueryField32;
+    public TextArea QueryField33;
+    public TextArea QueryField31;
+    public Pane queries3Pane;
+    public TextArea QueryField21;
+    public TextArea QueryField22;
+    public TextArea QueryField23;
+    public Pane queries2Pane;
+    public TextArea QueryResult21;
+    public TextArea QueryResult23;
+    public TextArea QueryResult22;
+    public Pane queries1Pane;
+
     ProjectLogic projectLogic = new ProjectLogic();
     public MenuItem insertEmployee;
     public MenuBar menuBar;
@@ -106,8 +128,53 @@ public class MySqlProjectController {
 
 
     public void initialize() {
-        //panes.addAll(insertEmployeePane,insertGuidePane);
-        //insertGuidePane.setVisible(false);
+        //********************************
+        QueryField11.setText("""
+                Select f.nameid as name, count(*) as howManyTime
+                from frequents as f inner join restaurant as r on f.restaurname = r.restaurname
+                group by f.nameid
+                order by count(*)""");
+        QueryField21.setText("""
+                                select distinct Customer.customerid, Customer.custname
+                                from Customer
+                                inner join Hotel_trip_customer
+                                on Customer.customerid = Hotel_trip_customer.customerid
+                                inner join Hotel
+                                on Hotel_trip_customer.hotelid = Hotel.hotelid
+                                Where Hotel.hotelcity = 'London' or Hotel.hotelcity= 'Paris' or Hotel.hotelcity= 'Madrid' or Hotel.hotelcity= 'Rome'""");
+        QueryField31.setText("""
+                SELECT htc.TripTo, htc.DepartureDate
+                FROM HOTEL_TRIP_CUSTOMER as htc                
+                UNION              
+                SELECT eo.TripTo, eo.DepartureDate
+                FROM EXCUR_OPT_CUSTOMER as eo
+                """);
+        QueryField33.setText("""
+                SELECT
+                    HOTEL.HotelId, HOTEL.hotelname, COUNT(*)
+                FROM
+                    HOTEL
+                        INNER JOIN
+                    hotel_trip ON HOTEL.HotelId = hotel_trip.Hotelid
+                GROUP BY HOTEL.hotelId
+                HAVING COUNT(HOTEL.HotelId) <= ALL (SELECT COUNT(HotelId)
+                                                   FROM HOTEL TRIP
+                                                   GROUP BY HotelId);
+                """);
+        QueryField32.setText("""
+                        SELECT customer.custname,customer.CustomerId
+                        FROM hotel_trip_customer as htc
+                              INNER JOIN
+                        customer
+                        ON htc.CustomerId = customer.CustomerId
+                        WHERE
+                            customer.CustomerId NOT IN (SELECT htc1.CustomerId FROM hotel_trip_customer AS htc1
+                            WHERE htc1.TripTo <>'Riga')
+                        GROUP BY CUSTOMER.CustomerId;
+                """);
+   
+
+        //********************************
         FnameCul.setCellValueFactory(new PropertyValueFactory<>("Fname"));
         MinitCul.setCellValueFactory(new PropertyValueFactory<>("Minit"));
         LnameCul.setCellValueFactory(new PropertyValueFactory<>("Lname"));
@@ -213,7 +280,8 @@ public class MySqlProjectController {
 
 
     public void showInsertGuide(ActionEvent actionEvent) {
-        insertGuidePane.toFront();
+        hidePanes();
+        insertGuidePane.setVisible(true);
     }
     public void confirmUpdate(ActionEvent actionEvent) throws Exception {
         projectLogic.updateEmployee(createEmployee());
@@ -260,48 +328,15 @@ public class MySqlProjectController {
     }
     public void hidePanes( ) {
         insertEmployeePane.setVisible(false);
-        query1Pane.setVisible(false);
+        queries1Pane.setVisible(false);
         dishPane.setVisible(false);
         insertGuidePane.setVisible(false);
+        queries2Pane.setVisible(false);
+        queries3Pane.setVisible(false);
+
 
     }
 
-    public void showQuery11(Event actionEvent) {
-        System.out.println("showQuery1");
-        hidePanes();
-        query1Pane.setVisible(true);
-        query1Pane.toFront();
-    }
-    public void showQuery12(Event actionEvent) {
-        System.out.println("showQuery12");
-        hidePanes();
-    }
-    public void showQuery13(Event actionEvent) {
-        System.out.println("showQuery13");
-        hidePanes();
-    }
-    public void showQuery21(Event actionEvent) {
-        System.out.println("showQuery21");
-        hidePanes();
-    }
-    public void showQuery22(Event actionEvent) {
-        System.out.println("showQuery22");
-        hidePanes();
-    }public void showQuery23(Event actionEvent) {
-        System.out.println("showQuery23");
-        hidePanes();
-    }public void showQuery31(Event actionEvent) {
-        System.out.println("showQuery31");
-        hidePanes();
-    }
-    public void showQuery32(Event actionEvent) {
-        System.out.println("showQuery32");
-        hidePanes();
-    }
-    public void showQuery33(Event actionEvent) {
-        System.out.println("showQuery33");
-        hidePanes();
-    }
 
 
     public void confirmUpdate1(ActionEvent actionEvent) throws Exception {
@@ -364,6 +399,7 @@ public class MySqlProjectController {
     public void showInsertDich(ActionEvent actionEvent) {
         hidePanes();
         dishPane.setVisible(true);
+
     }
 
     public void insertDish(ActionEvent actionEvent) {
@@ -414,8 +450,6 @@ public class MySqlProjectController {
             guidePhoneField.setText(g.getPhone());
             confirmUpdateBtn2.setVisible(true);
         }
-        
-        
     }
 
     public void insertGuide(ActionEvent actionEvent) {
@@ -440,6 +474,73 @@ public class MySqlProjectController {
         g.setName(guideNameField.getText());
         g.setPhone(guidePhoneField.getText());
         projectLogic.updateGuide(g);
+    }
+
+
+
+    public void RunQuery21(ActionEvent actionEvent) throws Exception {
+        QueryResult21.setText(projectLogic.runQuery(QueryField21.getText()).toString());
+
+    }
+
+    public void RunQuery23(ActionEvent actionEvent) throws Exception {
+        QueryResult23.setText(projectLogic.runQuery(QueryField23.getText()).toString());
+
+    }
+
+    public void RunQuery22(ActionEvent actionEvent) throws Exception {
+        QueryResult22.setText(projectLogic.runQuery(QueryField22.getText()).toString());
+
+    }
+
+    public void RunQuery31(ActionEvent actionEvent) throws Exception {
+        QueryResult31.setText(projectLogic.runQuery(QueryField31.getText()).toString());
+
+    }
+
+    public void RunQuery32(ActionEvent actionEvent) throws Exception {
+        QueryResult32.setText(projectLogic.runQuery(QueryField32.getText()).toString());
+
+    }
+
+    public void RunQuery33(ActionEvent actionEvent) throws Exception {
+        QueryResul33.setText(projectLogic.runQuery(QueryField33.getText()).toString());
+
+    }
+
+    public void RunQuery12(ActionEvent actionEvent) throws Exception {
+        QueryResult12.setText(projectLogic.runQuery(QueryField12.getText()).toString());
+
+    }
+
+    public void RunQuery13(ActionEvent actionEvent) throws Exception {
+        QueryResult13.setText(projectLogic.runQuery(QueryField13.getText()).toString());
+
+    }
+
+    public void RunQuery11(ActionEvent actionEvent) throws Exception {
+        QueryResult11.setText(projectLogic.runQuery(QueryField11.getText()).toString());
+
+    }
+
+
+
+    public void showQueries1(ActionEvent actionEvent) {
+        System.out.println("showQueries3");
+        hidePanes();
+        queries1Pane.setVisible(true);
+    }
+
+    public void showQueries2(ActionEvent actionEvent) {
+        System.out.println("showQueries2");
+        hidePanes();
+        queries2Pane.setVisible(true);
+    }
+
+    public void showQueries3(ActionEvent actionEvent) {
+        System.out.println("showQueries3");
+        hidePanes();
+        queries3Pane.setVisible(true);
     }
 }
 

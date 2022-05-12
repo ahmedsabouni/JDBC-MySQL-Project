@@ -1,22 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.DatePicker?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Menu?>
-<?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.Separator?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextArea?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<VBox fx:id="insertPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="603.0" prefWidth="917.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UI.MySqlProjectController">
+<VBox fx:id="insertPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="603.0" prefWidth="917.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UI.MySqlProjectController">
     <MenuBar fx:id="query1" prefHeight="22.0" prefWidth="600.0">
         <Menu text="add,delete,update">
             <MenuItem fx:id="insertEmployee" onAction="#showInsertEmployee" text="Employee" />
@@ -24,33 +13,43 @@
             <MenuItem fx:id="insertGuide" onAction="#showInsertGuide" text="guide" />
 
         </Menu>
-        <Menu text="Ahmed">
-            <MenuItem onAction="#showQuery11" text="Query11" />
-            <MenuItem text="Query12" />
-            <MenuItem text="Query13" />
+
+        <Menu text="Queries">
+            <MenuItem onAction="#showQueries1" text="Queries1" />
+            <MenuItem onAction="#showQueries2" text="Queries2" />
+            <MenuItem onAction="#showQueries3" text="Queries3" />
         </Menu>
-        <Menu text="Aya">
-            <MenuItem onAction="#showQuery21" text="Query1" />
-            <MenuItem onAction="#showQuery22" text="Query2" />
-            <MenuItem onAction="#showQuery23" text="Query3" />
-        </Menu>
-        <Menu text="Oussama">
-            <MenuItem onAction="#showQuery31" text="Query1" />
-            <MenuItem onAction="#showQuery32" text="Query2" />
-            <MenuItem onAction="#showQuery33" text="Query3" />
-        </Menu>
+
 
 
     </MenuBar>
 
     <AnchorPane fx:id="insertPanes">
-        <Pane fx:id="query1Pane" prefHeight="580.0" prefWidth="917.0" visible="false">
+        <Pane fx:id="queries1Pane" prefHeight="580.0" prefWidth="917.0" visible="false">
             <AnchorPane prefHeight="580.0" prefWidth="917.0">
-                <TextArea layoutX="211.0" layoutY="32.0" prefHeight="144.0" prefWidth="449.0" />
-                <TextArea layoutX="163.0" layoutY="259.0" prefHeight="200.0" prefWidth="598.0" />
+                <HBox layoutX="17.0" layoutY="23.0" prefHeight="200.0" prefWidth="877.0" spacing="30.0">
+                    <padding>
+                        <Insets left="20.0" right="20.0" />
+                    </padding>
+                    <TextArea fx:id="QueryField11" prefHeight="200.0" prefWidth="400.0" />
+                    <TextArea fx:id="QueryField12" prefHeight="200.0" prefWidth="400.0" />
+                    <TextArea fx:id="QueryField13" prefHeight="200.0" prefWidth="400.0" />
+                </HBox>
+            <HBox layoutX="36.0" layoutY="289.0" />
+            <Button layoutX="128.0" layoutY="238.0" mnemonicParsing="false" onAction="#RunQuery11" styleClass="btn-success" text="Run query" />
+                <HBox layoutX="24.0" layoutY="277.0" prefHeight="290.0" prefWidth="877.0" spacing="30.0">
+                    <padding>
+                        <Insets left="20.0" right="20.0" />
+                    </padding>
+                    <TextArea fx:id="QueryResult11" prefHeight="200.0" prefWidth="400.0" />
+                    <TextArea fx:id="QueryResult12" prefHeight="200.0" prefWidth="400.0" />
+                    <TextArea fx:id="QueryResult13" prefHeight="200.0" prefWidth="400.0" />
+                </HBox>
+            <Button layoutX="420.0" layoutY="237.0" mnemonicParsing="false" onAction="#RunQuery12" styleClass="btn-success" text="Run query" />
+            <Button layoutX="727.0" layoutY="237.0" mnemonicParsing="false" onAction="#RunQuery13" styleClass="btn-success" text="Run query" />
             </AnchorPane>
         </Pane>
-        <Pane fx:id="insertEmployeePane" disable="true" prefHeight="580.0" prefWidth="917.0" visible="false">
+        <Pane fx:id="insertEmployeePane" prefHeight="580.0" prefWidth="917.0" visible="false">
             <TextField fx:id="empSsn" layoutX="193.0" layoutY="41.0" onAction="#searchBtn" prefHeight="25.0" prefWidth="67.0" promptText="Ssn" />
             <Label layoutX="194.0" layoutY="21.0" text="Ssn" />
             <Button fx:id="searchEmpBtn" layoutX="194.0" layoutY="70.0" mnemonicParsing="false" onAction="#searchBtn" prefHeight="25.0" prefWidth="56.0" text="Search" />
@@ -110,7 +109,7 @@
             <Button fx:id="searchEmpsBtn" layoutX="396.0" layoutY="70.0" mnemonicParsing="false" onAction="#searchEmployees" prefHeight="25.0" prefWidth="139.0" text="Search All Employees" />
          <Button fx:id="confirmUpdateBtn" layoutX="51.0" layoutY="371.0" mnemonicParsing="false" onAction="#confirmUpdate" text="Confirm Update" visible="false" />
         </Pane>
-        <Pane fx:id="dishPane" disable="true" prefHeight="580.0" prefWidth="917.0" visible="false">
+        <Pane fx:id="dishPane" prefHeight="580.0" prefWidth="917.0" visible="false">
             <TextField fx:id="dishSearchField" layoutX="193.0" layoutY="41.0" onAction="#searchBtn" prefHeight="25.0" prefWidth="67.0" promptText="dish" />
             <Label layoutX="194.0" layoutY="21.0" text="dish" />
             <Button fx:id="searchDishBtn" layoutX="194.0" layoutY="70.0" mnemonicParsing="false" onAction="#searchBtn1" prefHeight="25.0" prefWidth="56.0" text="Search" />
@@ -150,7 +149,7 @@
             <Button fx:id="searchAllDishBtn" layoutX="396.0" layoutY="70.0" mnemonicParsing="false" onAction="#searchDishes" prefHeight="25.0" prefWidth="139.0" text="Search All Employees" />
             <Button fx:id="confirmUpdateBtn1" layoutX="51.0" layoutY="371.0" mnemonicParsing="false" onAction="#confirmUpdate1" text="Confirm Update" visible="false" />
         </Pane>
-        <Pane fx:id="insertGuidePane" prefHeight="580.0" prefWidth="917.0">
+        <Pane fx:id="insertGuidePane" prefHeight="580.0" prefWidth="917.0" visible="false">
             <TextField fx:id="guideIdSearchField" layoutX="193.0" layoutY="41.0" onAction="#searchBtn" prefHeight="25.0" prefWidth="67.0" promptText="Id" />
             <Label layoutX="194.0" layoutY="21.0" text="Id" />
             <Button fx:id="searchGuideBtn" layoutX="194.0" layoutY="70.0" mnemonicParsing="false" onAction="#searchGuide" prefHeight="25.0" prefWidth="56.0" text="Search" />
@@ -188,6 +187,54 @@
             </TableView>
             <Button fx:id="searchGuidesBtn" layoutX="396.0" layoutY="70.0" mnemonicParsing="false" onAction="#searchGuides" prefHeight="25.0" prefWidth="139.0" text="Search All guides" />
             <Button fx:id="confirmUpdateBtn2" layoutX="51.0" layoutY="371.0" mnemonicParsing="false" onAction="#confirmUpdate2" text="Confirm Update" visible="false" />
+        </Pane>
+        <Pane fx:id="queries2Pane" prefHeight="580.0" prefWidth="917.0" visible="false">
+            <AnchorPane prefHeight="580.0" prefWidth="917.0">
+                <HBox layoutX="17.0" layoutY="23.0" prefHeight="200.0" prefWidth="877.0" spacing="30.0">
+                    <padding>
+                        <Insets left="20.0" right="20.0" />
+                    </padding>
+                    <TextArea fx:id="QueryField21" prefHeight="200.0" prefWidth="400.0" />
+                    <TextArea fx:id="QueryField22" prefHeight="200.0" prefWidth="400.0" />
+                    <TextArea fx:id="QueryField23" prefHeight="200.0" prefWidth="400.0" />
+                </HBox>
+                <HBox layoutX="36.0" layoutY="289.0" />
+                <Button layoutX="127.0" layoutY="238.0" mnemonicParsing="false" onAction="#RunQuery21" styleClass="btn-success" text="Run query" />
+                <HBox layoutX="24.0" layoutY="277.0" prefHeight="290.0" prefWidth="877.0" spacing="30.0">
+                    <padding>
+                        <Insets left="20.0" right="20.0" />
+                    </padding>
+                    <TextArea fx:id="QueryResult21" prefHeight="200.0" prefWidth="400.0" />
+                    <TextArea fx:id="QueryResult22" prefHeight="200.0" prefWidth="400.0" />
+                    <TextArea fx:id="QueryResult23" prefHeight="200.0" prefWidth="400.0" />
+                </HBox>
+                <Button layoutX="721.0" layoutY="239.0" mnemonicParsing="false" onAction="#RunQuery23" styleClass="btn-success" text="Run query" />
+                <Button layoutX="430.0" layoutY="238.0" mnemonicParsing="false" onAction="#RunQuery22" styleClass="btn-success" text="Run query" />
+            </AnchorPane>
+        </Pane>
+        <Pane fx:id="queries3Pane" prefHeight="580.0" prefWidth="917.0" visible="false">
+            <AnchorPane prefHeight="580.0" prefWidth="917.0">
+                <HBox layoutX="17.0" layoutY="23.0" prefHeight="200.0" prefWidth="877.0" spacing="30.0">
+                    <padding>
+                        <Insets left="20.0" right="20.0" />
+                    </padding>
+                    <TextArea fx:id="QueryField31" prefHeight="200.0" prefWidth="400.0" />
+                    <TextArea fx:id="QueryField32" prefHeight="200.0" prefWidth="400.0" />
+                    <TextArea fx:id="QueryField33" prefHeight="200.0" prefWidth="400.0" />
+                </HBox>
+                <HBox layoutX="36.0" layoutY="289.0" />
+                <Button layoutX="136.0" layoutY="238.0" mnemonicParsing="false" onAction="#RunQuery31" styleClass="btn-success" text="Run query" />
+                <HBox layoutX="24.0" layoutY="277.0" prefHeight="290.0" prefWidth="877.0" spacing="30.0">
+                    <padding>
+                        <Insets left="20.0" right="20.0" />
+                    </padding>
+                    <TextArea fx:id="QueryResult31" prefHeight="200.0" prefWidth="400.0" />
+                    <TextArea fx:id="QueryResult32" prefHeight="200.0" prefWidth="400.0" />
+                    <TextArea fx:id="QueryResul33" prefHeight="200.0" prefWidth="400.0" />
+                </HBox>
+                <Button layoutX="413.0" layoutY="239.0" mnemonicParsing="false" onAction="#RunQuery32" styleClass="btn-success" text="Run query" />
+                <Button layoutX="724.0" layoutY="239.0" mnemonicParsing="false" onAction="#RunQuery33" styleClass="btn-success" text="Run query" />
+            </AnchorPane>
         </Pane>
     </AnchorPane>
 
