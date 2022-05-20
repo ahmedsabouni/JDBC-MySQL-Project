@@ -29,9 +29,9 @@ public class ProjectLogic {
         mySQLAccess.deleteEmployee(ssn);
     }
 
-    public void updateEmployee(Employee employee) {
+    public void updateEmployee(Employee employee,String ssn) {
         MySQLAccess mySQLAccess = new MySQLAccess();
-        mySQLAccess.updateEmployee(employee);
+        mySQLAccess.updateEmployee(employee,ssn);
     }
 
     public Collection<Dish> searchDishes() throws Exception {
@@ -39,9 +39,9 @@ public class ProjectLogic {
         return mySQLAccess.getDishes();
     }
 
-    public void updateDish(Dish dish) {
+    public void updateDish(Dish dish,String dishName) {
         MySQLAccess mySQLAccess = new MySQLAccess();
-        mySQLAccess.updateDish(dish);
+        mySQLAccess.updateDish(dish,dishName);
     }
 
     public void insertDish(Dish dish) {
@@ -69,12 +69,12 @@ public class ProjectLogic {
         mySQLAccess.deleteGuide(selectedItem);
     }
 
-    public void updateGuide(Guide g) {
+    public void updateGuide(Guide g,String id) {
         MySQLAccess mySQLAccess = new MySQLAccess();
-        mySQLAccess.updateGuide(g);
+        mySQLAccess.updateGuide(g,id);
     }
 
-    public List<Object> runQuery(String text) throws Exception {
+    public List<Object> runQuery(String text)  {
         MySQLAccess mySQLAccess = new MySQLAccess();
         return mySQLAccess.runQuery(text);
 

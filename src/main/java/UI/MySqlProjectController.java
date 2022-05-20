@@ -172,7 +172,31 @@ public class MySqlProjectController {
                             WHERE htc1.TripTo <>'Riga')
                         GROUP BY CUSTOMER.CustomerId;
                 """);
-   
+        QueryField12.setText("""
+        SELECT LNAME as "last name" , FNAME as "first name"
+        FROM EMPLOYEE
+        WHERE DNO = ( SELECT DNO FROM EMPLOYEE WHERE SALARY = ( SELECT MAX(SALARY) FROM EMPLOYEE) );""");
+
+        QueryField22.setText("""
+        SELECT Dname, Dnumber, COUNT(*) as 'number of employee', COUNT(case when employee.Sex='M' then 1 end) as men, COUNT(case when employee.Sex='F' then 1 end) as women
+        FROM DEPARTMENT, EMPLOYEE
+        WHERE Dnumber=Dno
+        GROUP BY Dname""");
+
+        QueryField13.setText("""
+                SELECT hotel.hotelcity, COUNT(DISTINCT hotel_trip_customer.HotelId) as numhotelbooked
+                FROM hotel INNER JOIN hotel_trip_customer\s
+                ON hotel.HotelId=hotel_trip_customer.HotelId
+                GROUP BY hotel.hotelcity\s
+                HAVING COUNT(DISTINCT hotel_trip_customer.HotelId) <=4
+                """);
+        QueryField23.setText("""
+        SELECT Pnumber, Pname, COUNT(*) as numberempl
+        FROM project INNER JOIN works_on
+        on Pnumber=Pno
+        INNER JOIN employee ON Ssn=Essn
+        WHERE Dno<>5
+        GROUP BY Pnumber , Pname""");
 
         //********************************
         FnameCul.setCellValueFactory(new PropertyValueFactory<>("Fname"));
@@ -195,6 +219,30 @@ public class MySqlProjectController {
         guideIdCul.setCellValueFactory(new PropertyValueFactory<>("Id"));
         guidephoneCul.setCellValueFactory(new PropertyValueFactory<>("phone"));
 
+        QueryResul33.setWrapText(true);
+        QueryResult11.setWrapText(true);
+        QueryResult22.setWrapText(true);
+        QueryResult12.setWrapText(true);
+        QueryResult13.setWrapText(true);
+        QueryResult23.setWrapText(true);
+        QueryResult21.setWrapText(true);
+        QueryResult31.setWrapText(true);
+        QueryResult32.setWrapText(true);
+        QueryField11.setWrapText(true);
+        QueryField12.setWrapText(true);
+        QueryField22.setWrapText(true);
+        QueryField21.setWrapText(true);
+        QueryField31.setWrapText(true);
+        QueryField32.setWrapText(true);
+        QueryField13.setWrapText(true);
+        QueryField23.setWrapText(true);
+        QueryField31.setWrapText(true);
+
+
+
+
+
+
     }
 
     public void updateEmployee(ActionEvent actionEvent) {
@@ -213,7 +261,7 @@ public class MySqlProjectController {
             AddressField.setText(employee.getAddress());
             Super_ssnField.setText(employee.getSuper_ssn());
             SsnField.setText(employee.getSsn());
-            SsnField.setEditable(false);
+
 
             SalaryField.setText(String.valueOf(employee.getSalary()));
             SexField.setText(employee.getSex());
@@ -284,12 +332,14 @@ public class MySqlProjectController {
         insertGuidePane.setVisible(true);
     }
     public void confirmUpdate(ActionEvent actionEvent) throws Exception {
-        projectLogic.updateEmployee(createEmployee());
+        if (employeeTable.getSelectionModel().getSelectedItem() != null) {
+        projectLogic.updateEmployee(createEmployee(),employeeTable.getSelectionModel().getSelectedItem().getSsn());
         resultArea.setText("Employee Updated successfully");
         clearFields();
         employeeTable.getItems().clear();
         confirmUpdateBtn.setVisible(false);
-        searchEmployees(actionEvent);
+        searchEmployees(actionEvent);}
+        else { resultArea.setText("Please select an employee to update");}
 
         }
 
@@ -340,12 +390,14 @@ public class MySqlProjectController {
 
 
     public void confirmUpdate1(ActionEvent actionEvent) throws Exception {
-        projectLogic.updateDish(createDish());
+        if (dishTable.getSelectionModel().getSelectedItem() != null) {
+        projectLogic.updateDish(createDish(),dishTable.getSelectionModel().getSelectedItem().getDish());
         resultArea.setText("Dish Updated successfully");
         clearFields();
         employeeTable.getItems().clear();
         confirmUpdateBtn1.setVisible(false);
-        searchDishes(actionEvent);
+        searchDishes(actionEvent);}
+        else { resultArea.setText("Please select a dish to update");}
     }
 
     private Dish createDish() {
@@ -470,55 +522,60 @@ public class MySqlProjectController {
 
     public void confirmUpdate2(ActionEvent actionEvent) {
         Guide g = guideTable.getSelectionModel().getSelectedItem();
+        String id =g.getId();
         g.setId(guideIdField.getText());
         g.setName(guideNameField.getText());
         g.setPhone(guidePhoneField.getText());
-        projectLogic.updateGuide(g);
+        projectLogic.updateGuide(g,id);
+        resultArea2.setText("Guide updated successfully");
+        guideTable.getItems().clear();
+        guideTable.getItems().addAll(projectLogic.serchGuides());
+
     }
 
 
 
-    public void RunQuery21(ActionEvent actionEvent) throws Exception {
+    public void RunQuery21(ActionEvent actionEvent)  {
         QueryResult21.setText(projectLogic.runQuery(QueryField21.getText()).toString());
 
     }
 
-    public void RunQuery23(ActionEvent actionEvent) throws Exception {
+    public void RunQuery23(ActionEvent actionEvent)  {
         QueryResult23.setText(projectLogic.runQuery(QueryField23.getText()).toString());
 
     }
 
-    public void RunQuery22(ActionEvent actionEvent) throws Exception {
+    public void RunQuery22(ActionEvent actionEvent)  {
         QueryResult22.setText(projectLogic.runQuery(QueryField22.getText()).toString());
 
     }
 
-    public void RunQuery31(ActionEvent actionEvent) throws Exception {
+    public void RunQuery31(ActionEvent actionEvent)  {
         QueryResult31.setText(projectLogic.runQuery(QueryField31.getText()).toString());
 
     }
 
-    public void RunQuery32(ActionEvent actionEvent) throws Exception {
+    public void RunQuery32(ActionEvent actionEvent)  {
         QueryResult32.setText(projectLogic.runQuery(QueryField32.getText()).toString());
 
     }
 
-    public void RunQuery33(ActionEvent actionEvent) throws Exception {
+    public void RunQuery33(ActionEvent actionEvent)  {
         QueryResul33.setText(projectLogic.runQuery(QueryField33.getText()).toString());
 
     }
 
-    public void RunQuery12(ActionEvent actionEvent) throws Exception {
+    public void RunQuery12(ActionEvent actionEvent)  {
         QueryResult12.setText(projectLogic.runQuery(QueryField12.getText()).toString());
 
     }
 
-    public void RunQuery13(ActionEvent actionEvent) throws Exception {
+    public void RunQuery13(ActionEvent actionEvent)  {
         QueryResult13.setText(projectLogic.runQuery(QueryField13.getText()).toString());
 
     }
 
-    public void RunQuery11(ActionEvent actionEvent) throws Exception {
+    public void RunQuery11(ActionEvent actionEvent)  {
         QueryResult11.setText(projectLogic.runQuery(QueryField11.getText()).toString());
 
     }

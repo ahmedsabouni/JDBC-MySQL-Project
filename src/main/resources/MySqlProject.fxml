@@ -1,12 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<VBox fx:id="insertPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="603.0" prefWidth="917.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UI.MySqlProjectController">
-    <MenuBar fx:id="query1" prefHeight="22.0" prefWidth="600.0">
+<VBox fx:id="insertPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="603.0" prefWidth="917.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UI.MySqlProjectController">
+    <MenuBar fx:id="query1" prefHeight="22.0" prefWidth="600.0" style="-fx-background-color: #8686e0;">
         <Menu text="add,delete,update">
             <MenuItem fx:id="insertEmployee" onAction="#showInsertEmployee" text="Employee" />
          <MenuItem fx:id="insertDish" mnemonicParsing="false" onAction="#showInsertDich" text="dish" />
@@ -53,7 +66,7 @@
             <TextField fx:id="empSsn" layoutX="193.0" layoutY="41.0" onAction="#searchBtn" prefHeight="25.0" prefWidth="67.0" promptText="Ssn" />
             <Label layoutX="194.0" layoutY="21.0" text="Ssn" />
             <Button fx:id="searchEmpBtn" layoutX="194.0" layoutY="70.0" mnemonicParsing="false" onAction="#searchBtn" prefHeight="25.0" prefWidth="56.0" text="Search" />
-            <Button fx:id="deleteEmpBtn" layoutX="332.0" layoutY="70.0" mnemonicParsing="false" onAction="#deleteEmployee" prefHeight="25.0" prefWidth="56.0" text="Delete" />
+            <Button fx:id="deleteEmpBtn" layoutX="332.0" layoutY="70.0" mnemonicParsing="false" onAction="#deleteEmployee" prefHeight="25.0" prefWidth="56.0" styleClass="btn-danger" text="Delete" />
             <Button fx:id="updateEmpBtn" layoutX="263.0" layoutY="70.0" mnemonicParsing="false" onAction="#updateEmployee" prefHeight="25.0" prefWidth="56.0" text="Update" />
             <Button fx:id="addEmpBtn" layoutX="51.0" layoutY="335.0" mnemonicParsing="false" onAction="#insertEmployee" text="Add Employee" />
             <TextArea fx:id="resultArea" layoutX="250.0" layoutY="433.0" prefHeight="115.0" prefWidth="487.0" wrapText="true" />
@@ -113,7 +126,7 @@
             <TextField fx:id="dishSearchField" layoutX="193.0" layoutY="41.0" onAction="#searchBtn" prefHeight="25.0" prefWidth="67.0" promptText="dish" />
             <Label layoutX="194.0" layoutY="21.0" text="dish" />
             <Button fx:id="searchDishBtn" layoutX="194.0" layoutY="70.0" mnemonicParsing="false" onAction="#searchBtn1" prefHeight="25.0" prefWidth="56.0" text="Search" />
-            <Button fx:id="deleteDishBtn" layoutX="332.0" layoutY="70.0" mnemonicParsing="false" onAction="#deleteDish" prefHeight="25.0" prefWidth="56.0" text="Delete" />
+            <Button fx:id="deleteDishBtn" layoutX="332.0" layoutY="70.0" mnemonicParsing="false" onAction="#deleteDish" prefHeight="25.0" prefWidth="56.0" styleClass="btn-danger" text="Delete" />
             <Button fx:id="updateDishBtn" layoutX="263.0" layoutY="70.0" mnemonicParsing="false" onAction="#updateDish" prefHeight="25.0" prefWidth="56.0" text="Update" />
             <Button fx:id="addDishBtn" layoutX="51.0" layoutY="335.0" mnemonicParsing="false" onAction="#insertDish" text="Add dish" />
             <TextArea fx:id="resultArea1" layoutX="250.0" layoutY="433.0" prefHeight="115.0" prefWidth="487.0" wrapText="true" />
@@ -153,7 +166,7 @@
             <TextField fx:id="guideIdSearchField" layoutX="193.0" layoutY="41.0" onAction="#searchBtn" prefHeight="25.0" prefWidth="67.0" promptText="Id" />
             <Label layoutX="194.0" layoutY="21.0" text="Id" />
             <Button fx:id="searchGuideBtn" layoutX="194.0" layoutY="70.0" mnemonicParsing="false" onAction="#searchGuide" prefHeight="25.0" prefWidth="56.0" text="Search" />
-            <Button fx:id="deleteGuideBtn" layoutX="332.0" layoutY="70.0" mnemonicParsing="false" onAction="#deleteGuide" prefHeight="25.0" prefWidth="56.0" text="Delete" />
+            <Button fx:id="deleteGuideBtn" layoutX="332.0" layoutY="70.0" mnemonicParsing="false" onAction="#deleteGuide" prefHeight="25.0" prefWidth="56.0" styleClass="btn-danger" text="Delete" />
             <Button fx:id="updateGuideBtn" layoutX="263.0" layoutY="70.0" mnemonicParsing="false" onAction="#updateGuide" prefHeight="25.0" prefWidth="56.0" text="Update" />
             <Button fx:id="addGuideBtn" layoutX="51.0" layoutY="335.0" mnemonicParsing="false" onAction="#insertGuide" text="Add guide" />
             <TextArea fx:id="resultArea2" layoutX="250.0" layoutY="433.0" prefHeight="115.0" prefWidth="487.0" wrapText="true" />

@@ -85,19 +85,12 @@ public class MySQLAccess {
             e.printStackTrace();
         }
     }
-    public Employee getEmployee(String ssn) throws Exception {
-        Connection connection = ConnectDb();
-        String query = "SELECT * FROM employee WHERE Ssn = ?";
-        PreparedStatement preparedStmt = connection.prepareStatement(query);
-        preparedStmt.setString(1, ssn);
-        ResultSet resultSet = preparedStmt.executeQuery();
-        return CreateEmployee(resultSet);
-    }
 
-    public void updateEmployee(Employee employee) {
+
+    public void updateEmployee(Employee employee,String ssn) {
         try {
             Connection connection = ConnectDb();
-            String query = "UPDATE employee SET  Fname = ?, Minit = ?, Lname = ?, Address = ?, Bdate = ?,Dno = ?, Super_ssn = ?, Sex=?,Salary=? where Ssn=?";
+            String query = "UPDATE employee SET  Fname = ?, Minit = ?, Lname = ?, Address = ?, Bdate = ?,Dno = ?, Super_ssn = ?, Sex=?,Salary=?,Ssn=? where Ssn=?";
             PreparedStatement preparedStatement=connection.prepareStatement(query);
             preparedStatement.setString(1, employee.getFname());
             preparedStatement.setString(2, employee.getMinit());
@@ -109,6 +102,7 @@ public class MySQLAccess {
             preparedStatement.setString(8, employee.getSex());
             preparedStatement.setInt(9, employee.getSalary());
             preparedStatement.setString(10, employee.getSsn());
+            preparedStatement.setString(11, ssn);
 
             preparedStatement.execute();
             connection.close();
@@ -139,16 +133,17 @@ public class MySQLAccess {
 
     }
 
-    public void updateDish(Dish dish) {
+    public void updateDish(Dish dish,String dishName) {
         try {
             Connection connection = ConnectDb();
-            String query = "UPDATE dishes SET  dish = ?, cuisine = ?, category = ?, difficulty = ? where dish=?";
+            String query = "UPDATE dishes SET  dish = ?, cuisine = ?, category = ?, difficulty = ?,dish=? where dish=?";
             PreparedStatement preparedStatement=connection.prepareStatement(query);
             preparedStatement.setString(1, dish.getDish());
             preparedStatement.setString(2, dish.getCuisine());
             preparedStatement.setString(3, dish.getCategory());
             preparedStatement.setString(4, dish.getDifficulty());
             preparedStatement.setString(5, dish.getDish());
+            preparedStatement.setString(6, dishName);
             preparedStatement.execute();
             connection.close();
     } catch (Exception e) {
@@ -168,26 +163,10 @@ public class MySQLAccess {
             preparedStatement.setString(4, dish.getDifficulty());
             preparedStatement.execute();
             connection.close();
-    } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (Exception e) {
+    } catch (Exception e) {
             e.printStackTrace();
         }
- /*public ArrayList <String> query11(String ssn) throws Exception {
-            ArrayList <String> list = new ArrayList<String>();
-            Connection connection = ConnectDb();
-            String query = "SELECT MIN(person.AGE)FROM frequents INNER JOIN restaurant ON frequents.restaurname=restaurant.restaurname INNER JOIN person on frequents.nameId=person.nameId where restaurant.city=? AND person.gender=?";
-            PreparedStatement preparedStatement=connection.prepareStatement((java.lang.String) query);
-            preparedStatement.setString(1, "Paris");
-            preparedStatement.setString(2, "male");
-            ResultSet result= preparedStatement.getResultSet();
-
-
-
-
-
-
-        }*/}
+ }
 
     public void deleteDish(Dish selectedItem) {
         try {
@@ -204,7 +183,7 @@ public class MySQLAccess {
     }
 
     public Collection<Guide> getGuides() {
-        Collection<Guide> guides = new ArrayList<Guide>();
+        Collection<Guide> guides = new ArrayList<>();
         try {
             Connection connection = ConnectDb();
             String query = "SELECT * FROM tourguide";
@@ -253,14 +232,15 @@ public class MySQLAccess {
         }
     }
 
-    public void updateGuide(Guide g) {
+    public void updateGuide(Guide g, String id) {
         try {
             Connection connection = ConnectDb();
-            String query = "UPDATE tourguide SET guidephone = ?, guidename = ? WHERE GuideId = ?";
+            String query = "UPDATE tourguide SET guidephone = ?, guidename = ?,GuideId=? WHERE GuideId = ?";
             PreparedStatement preparedStatement=connection.prepareStatement(query);
             preparedStatement.setString(1, g.getPhone());
             preparedStatement.setString(2, g.getName());
             preparedStatement.setString(3, g.getId());
+            preparedStatement.setString(4, id);
             preparedStatement.execute();
             connection.close();
         } catch (Exception e) {
@@ -268,26 +248,30 @@ public class MySQLAccess {
         }
     }
 
-    public List<Object> runQuery(String text) throws Exception {
-        List<Object> list = new ArrayList<Object>();
-        Connection connection = ConnectDb();
-        String query = text;
-        PreparedStatement preparedStmt = connection.prepareStatement(query);
-        ResultSet resultSet = preparedStmt.executeQuery();
-        System.out.println("Query executed");
-        // print result set
-        while (resultSet.next()) {
-            Object obj = new Object();
-            obj="\n";
-            for (int i = 1; i <= resultSet.getMetaData().getColumnCount(); i++) {
+    public List<Object> runQuery(String text) {
+        List<Object> list = new ArrayList<>();
 
-            obj += resultSet.getMetaData().getColumnName(i) + ": " + resultSet.getString(i) + "\n";
+        try {
+            Connection connection = ConnectDb();
+            PreparedStatement preparedStmt = connection.prepareStatement(text);
+            ResultSet resultSet = preparedStmt.executeQuery();
+            System.out.println("Query executed");
+            // print result set
+            while (resultSet.next()) {
+                Object obj;
+                obj = "\n";
+                for (int i = 1; i <= resultSet.getMetaData().getColumnCount(); i++) {
 
+                    obj += resultSet.getMetaData().getColumnName(i) + ": " + resultSet.getString(i) + "\n";
+
+                }
+                list.add(obj);
             }
-            list.add(obj);
+            connection.close();
+        } catch (Exception e) {
+            list.add(e.getMessage());
         }
-        connection.close();
         return list;
-    }
 
+    }
 }
